@@ -8,6 +8,26 @@ export interface PurchaseResult {
   error?: string;
 }
 
+export const NOTE_PLATFORM_FEE_INR = 10.00;
+
+/**
+ * Calculates creator earnings and platform commission based on the NoteX flat ₹10 fee rule.
+ */
+export function calculatePayoutSplits(price: number, fixedFee: number = NOTE_PLATFORM_FEE_INR): {
+  totalPrice: number;
+  platformFee: number;
+  creatorEarnings: number;
+} {
+  const sanitizedPrice = Math.max(0, Number(price) || 0);
+  const platformFee = Math.min(sanitizedPrice, fixedFee);
+  const creatorEarnings = Math.max(0, sanitizedPrice - platformFee);
+  return {
+    totalPrice: sanitizedPrice,
+    platformFee,
+    creatorEarnings,
+  };
+}
+
 /**
  * Executes atomic purchase transaction using Supabase RPC or resilient fallback
  */

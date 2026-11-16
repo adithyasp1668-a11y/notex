@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { NoteCard } from '../components/common/NoteCard';
+import { EmptyState } from '../components/common/EmptyState';
 
 export const BuyerLibraryPage: React.FC = () => {
   const { user, purchasedNotes, notes, wishlist, openViewer } = useApp();
@@ -114,22 +115,13 @@ export const BuyerLibraryPage: React.FC = () => {
         {activeTab === 'purchased' && (
           <div>
             {myPurchasedNotes.length === 0 ? (
-              <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-brand-50 flex items-center justify-center text-brand-600">
-                  <Library className="w-8 h-8" />
-                </div>
-                <h3 className="text-lg font-bold text-navy-950">Your library is currently empty</h3>
-                <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                  When you purchase notes through our test checkout, they will instantly appear here for lifetime watermarked reading.
-                </p>
-                <Link
-                  to="/explore"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 text-white text-xs font-bold shadow-md hover:bg-brand-700 transition-colors"
-                >
-                  <span>Explore VTU Notes</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+              <EmptyState
+                icon={Library}
+                title="Your library is currently empty"
+                description="When you purchase notes through our test checkout, they will instantly appear here for lifetime watermarked reading."
+                actionLabel="Explore VTU Notes"
+                onAction={() => window.location.href = '/explore'}
+              />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {myPurchasedNotes.map(({ purchase, note }) => {
@@ -195,9 +187,13 @@ export const BuyerLibraryPage: React.FC = () => {
         {activeTab === 'wishlist' && (
           <div>
             {myWishlistedNotes.length === 0 ? (
-              <div className="bg-white rounded-3xl p-12 text-center border border-slate-200">
-                <p className="text-sm text-slate-500">You have no notes saved to your wishlist yet.</p>
-              </div>
+              <EmptyState
+                icon={Bookmark}
+                title="No saved notes"
+                description="Save notes you are interested in by clicking the bookmark icon on any note card."
+                actionLabel="Browse Marketplace"
+                onAction={() => window.location.href = '/explore'}
+              />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {myWishlistedNotes.map(note => (

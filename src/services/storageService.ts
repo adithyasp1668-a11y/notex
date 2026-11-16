@@ -8,7 +8,21 @@ export interface PdfValidationResult {
   mimeType?: string;
 }
 
-const MAX_PDF_SIZE_BYTES = 50 * 1024 * 1024; // 50MB limit
+export const MAX_PDF_SIZE_BYTES = 50 * 1024 * 1024; // 50MB limit
+
+/**
+ * Validates binary magic byte signature (%PDF-)
+ */
+export async function validatePdfMagicBytes(file: Blob): Promise<boolean> {
+  try {
+    const buffer = await file.slice(0, 5).arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    const header = String.fromCharCode(...bytes);
+    return header.startsWith('%PDF-');
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Validates PDF MIME type, size, and magic byte signature (%PDF-)

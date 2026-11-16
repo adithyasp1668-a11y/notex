@@ -32,6 +32,7 @@ import { useAuth } from '../context/AuthContext';
 import { BRANCHES, COLLEGES, UNIVERSITIES } from '../data/mockData';
 import { EngineeringBranch } from '../types';
 import { validatePdfFile, uploadPrivateNotePdf, PdfValidationResult } from '../services/storageService';
+import { EmptyState } from '../components/common/EmptyState';
 
 export const CreatorDashboardPage: React.FC = () => {
   const { 
@@ -627,7 +628,16 @@ export const CreatorDashboardPage: React.FC = () => {
               </h3>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+            {myNotes.length === 0 ? (
+              <EmptyState
+                icon={FileText}
+                title="No notes uploaded yet"
+                description="Upload your high-scoring handwritten VTU notes to start earning passive income every semester exam season."
+                actionLabel="Upload First Note"
+                onAction={() => setActiveTab('upload')}
+              />
+            ) : (
+              <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px]">
@@ -687,6 +697,7 @@ export const CreatorDashboardPage: React.FC = () => {
                 </table>
               </div>
             </div>
+            )}
           </div>
         )}
 

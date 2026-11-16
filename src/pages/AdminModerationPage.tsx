@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { NoteItem } from '../types';
+import { EmptyState } from '../components/common/EmptyState';
 
 export const AdminModerationPage: React.FC = () => {
   const { notes, approveNote, rejectNote, purchasedNotes, openViewer } = useApp();
@@ -150,11 +151,11 @@ export const AdminModerationPage: React.FC = () => {
         {selectedTab === 'pending' && (
           <div>
             {pendingNotes.length === 0 ? (
-              <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 space-y-2">
-                <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
-                <h3 className="text-base font-bold text-navy-950">Queue is Clear!</h3>
-                <p className="text-xs text-slate-500">All student note uploads have been moderated and reviewed.</p>
-              </div>
+              <EmptyState
+                icon={CheckCircle2}
+                title="Moderation Queue is Clear"
+                description="All student note uploads have been moderated and reviewed. No action needed at this time."
+              />
             ) : (
               <div className="space-y-4">
                 {pendingNotes.map(n => (
