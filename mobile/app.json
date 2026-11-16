@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "NoteX",
+    "slug": "notex",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#0B132B"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0B132B"
+      },
+      "package": "com.notex.studentnotes"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
